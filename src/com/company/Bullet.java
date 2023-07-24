@@ -11,7 +11,7 @@ public class Bullet {
     private int x,y;
     private Dir dir;
 
-    private boolean live = true;
+    private boolean living = true;
     TankFrame tf = null;
 
     public Bullet(int x, int y, Dir dir,TankFrame tf){
@@ -22,7 +22,7 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if(!live){
+        if(!living){
             tf.bullets.remove(this);
         }
         switch (dir){
@@ -59,9 +59,26 @@ public class Bullet {
         }
 
         if(x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT){
-            live = false;
+            living = false;
         }
 
     }
 
+    //自己写入坦克碰撞检测的方法
+    public void collideWith(Tank tank) {
+        //判断坦克这个方块和子弹这个方块是否相交，需要使用到辅助类rectangle
+        //取得子弹本身的矩形和坦克的矩形
+        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+        //判断如果两个矩形相交，那么坦克和子弹都要消失
+        if(rect1.intersects(rect2)){
+            tank.die();
+            this.die();
+        }
+    }
+
+    //添加die方法
+    private void die() {
+        this.living = false;
+    }
 }

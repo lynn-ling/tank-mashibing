@@ -11,8 +11,26 @@ public class Tank {
     public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
     private boolean moving = false;
-
     private TankFrame tf = null;
+
+    //加坦克的属性living为true
+    private boolean living = true;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -46,6 +64,9 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
+        //判断如果坦克没活着，就要将它从敌人坦克列表里移除
+        //如果不移除，只是不画(return)，那这辆死了的坦克就一直占着位置，不能透过死的坦克打到其他坦克
+        if(!living) tf.tanks.remove(this);
         switch (dir){
             case LEFT:
                 g.drawImage(ResourceMgr.tankL,x,y,null);
@@ -87,5 +108,10 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
         tf.bullets.add(new Bullet(bX,bY,this.dir,this.tf));
+    }
+
+    //添加die方法
+    public void die() {
+        this.living = false;
     }
 }
