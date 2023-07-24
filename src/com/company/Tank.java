@@ -1,20 +1,27 @@
 package com.company;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 5;
+    private static final int SPEED = 1;
 
     public static int WIDTH = ResourceMgr.tankD.getWidth();
     public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
-    private boolean moving = false;
+    //要让坦克随机移动
+    private Random random = new Random();
+
+    //让坦克们游戏开局就动起来
+    private boolean moving = true;
     private TankFrame tf = null;
 
     //加坦克的属性living为true
     private boolean living = true;
+    //默认坦克阵营为敌方阵营
+    private Group group = Group.BAD;
 
     public int getX() {
         return x;
@@ -32,10 +39,11 @@ public class Tank {
         this.y = y;
     }
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group,TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -84,6 +92,14 @@ public class Tank {
         move();
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     private void move(){
         if(!moving){
             return;
@@ -102,12 +118,15 @@ public class Tank {
                 y += SPEED;
                 break;
         }
+
+        //让敌人坦克也打子弹，这里是随机取得10以内的随机数，如果数字大于8，就打子弹
+        if(random.nextInt(10) > 8) this.fire();
     }
 
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX,bY,this.dir,this.tf));
+        tf.bullets.add(new Bullet(bX,bY,this.dir,this.group,this.tf));
     }
 
     //添加die方法
