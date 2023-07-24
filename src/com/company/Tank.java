@@ -119,8 +119,17 @@ public class Tank {
                 break;
         }
 
-        //让敌人坦克也打子弹，这里是随机取得10以内的随机数，如果数字大于8，就打子弹
-        if(random.nextInt(10) > 8) this.fire();
+        //让敌人坦克也打子弹，这里是随机取得100以内的随机数，如果数字大于95，就打子弹
+        if(this.group == Group.BAD && random.nextInt(100) > 95)
+            this.fire();
+        //如果坦克为敌方坦克就让坦克每移动一步改变个方向
+        if(this.group == Group.BAD && random.nextInt(100) > 95)
+            randomDir();
+    }
+
+    private void randomDir() {
+        //Dir.values()返回个数组，随机取上下左右四个方向
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void fire() {
