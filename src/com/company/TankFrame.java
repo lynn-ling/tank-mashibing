@@ -15,10 +15,9 @@ public class TankFrame extends Frame {
     List<Bullet> bullets = new ArrayList<>();
     //因要加入敌方坦克，因此要将坦克放到容器里
     List<Tank> tanks = new ArrayList<>();
+    List<Explode> explodes = new ArrayList<>();
 
-
-
-    static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
+    static final int GAME_WIDTH = 1080,GAME_HEIGHT = 960;
 
     public TankFrame(){
         System.out.println(this);
@@ -60,6 +59,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量："+bullets.size(),10,60);
         g.drawString("敌人的数量："+tanks.size(),10,80);
+        g.drawString("爆炸的数量："+explodes.size(),10,100);
         g.setColor(c);
 
         myTank.paint(g);
@@ -69,6 +69,11 @@ public class TankFrame extends Frame {
         //画敌方坦克
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
+        }
+
+        //画出爆炸效果
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
         }
 
         //碰撞检测，每个子弹和敌人坦克挨个碰撞，判断子弹是否打到敌人坦克
