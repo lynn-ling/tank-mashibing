@@ -12,7 +12,6 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200,200, Dir.DOWN,this);
-    //定义数组，以便可以弄出多颗子弹
     List<Bullet> bullets = new ArrayList<>();
 
     static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
@@ -59,8 +58,6 @@ public class TankFrame extends Frame {
         g.setColor(c);
 
         myTank.paint(g);
-        //把bullets每颗子弹都画出来,这样我要打子弹的时候直接装到bullets里即可,装几颗画几颗
-        //bullets.size()会同步进行计算，不会发生越界问题
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }

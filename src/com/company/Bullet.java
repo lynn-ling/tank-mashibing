@@ -4,15 +4,16 @@ import java.awt.*;
 
 public class Bullet {
     private static final int SPEED = 30;
-    private static int WIDTH = 30,HEIGHT = 30;
+    //直接通过获取子弹图片的大小来设定子弹的大小
+    public static int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static int HEIGHT = ResourceMgr.bulletD.getHeight();
+
     private int x,y;
     private Dir dir;
 
-    //定义一个变量，表示子弹还在屏幕内的时候live为true，一旦出屏幕live就为false
     private boolean live = true;
     TankFrame tf = null;
 
-    //也进行TankFrame的引用
     public Bullet(int x, int y, Dir dir,TankFrame tf){
         this.x = x;
         this.y = y;
@@ -24,10 +25,21 @@ public class Bullet {
         if(!live){
             tf.bullets.remove(this);
         }
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        //子弹换成图片
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD,x,y,null);
+                break;
+        }
         move();
     }
 
@@ -46,7 +58,7 @@ public class Bullet {
                 y += SPEED;
                 break;
         }
-        //进行判断，只要符合下面条件live值就为false
+
         if(x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT){
             live = false;
         }
