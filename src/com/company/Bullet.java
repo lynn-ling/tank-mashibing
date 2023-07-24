@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Bullet {
     private static final int SPEED = 30;
-    //直接通过获取子弹图片的大小来设定子弹的大小
+
     public static int WIDTH = ResourceMgr.bulletD.getWidth();
     public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 
@@ -25,7 +25,6 @@ public class Bullet {
         if(!live){
             tf.bullets.remove(this);
         }
-        //子弹换成图片
         switch (dir){
             case LEFT:
                 g.drawImage(ResourceMgr.bulletL,x,y,null);

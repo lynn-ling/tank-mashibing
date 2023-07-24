@@ -11,8 +11,12 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200,200, Dir.DOWN,this);
+    Tank myTank = new Tank(200,400, Dir.DOWN,this);
     List<Bullet> bullets = new ArrayList<>();
+    //因要加入敌方坦克，因此要将坦克放到容器里
+    List<Tank> tanks = new ArrayList<>();
+
+
 
     static final int GAME_WIDTH = 800,GAME_HEIGHT = 600;
 
@@ -31,6 +35,7 @@ public class TankFrame extends Frame {
             }
         });
         this.addKeyListener(new MyKeyListener());
+
     }
 
 
@@ -51,7 +56,6 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g){
-        //在屏幕上显示出来当前在画面里的数量有多少
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量："+bullets.size(),10,60);
@@ -60,6 +64,10 @@ public class TankFrame extends Frame {
         myTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+        //画敌方坦克
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
         }
 
     }
