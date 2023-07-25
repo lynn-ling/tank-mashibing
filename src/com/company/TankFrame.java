@@ -13,7 +13,7 @@ public class TankFrame extends Frame {
 
     Tank myTank = new Tank(200,400, Dir.DOWN,Group.GOOD,this);
     List<Bullet> bullets = new ArrayList<>();
-    //因要加入敌方坦克，因此要将坦克放到容器里
+
     List<Tank> tanks = new ArrayList<>();
     List<Explode> explodes = new ArrayList<>();
 
@@ -66,17 +66,15 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
-        //画敌方坦克
+
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
 
-        //画出爆炸效果
         for (int i = 0; i < explodes.size(); i++) {
             explodes.get(i).paint(g);
         }
 
-        //碰撞检测，每个子弹和敌人坦克挨个碰撞，判断子弹是否打到敌人坦克
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < tanks.size(); j++) {
                 bullets.get(i).collideWith(tanks.get(j));

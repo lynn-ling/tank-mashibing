@@ -5,7 +5,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 public class ImageUtil {
-        //起到旋转图片的作用，bufferedimage：传进来的图片，degree：旋转角度
 	public static BufferedImage rotateImage(final BufferedImage bufferedimage,
             final int degree) {
         int w = bufferedimage.getWidth();

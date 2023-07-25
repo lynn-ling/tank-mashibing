@@ -14,7 +14,6 @@ public class Audio {
 
 	byte[] b = new byte[1024 * 1024 * 15];
 
-	
 	public void loop() {
 		try {
 

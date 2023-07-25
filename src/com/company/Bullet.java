@@ -13,7 +13,7 @@ public class Bullet {
 
     private boolean living = true;
     TankFrame tf = null;
-    //子弹也需要区分是我方坦克打出的还是敌人方坦克打出的
+
     private Group group = Group.BAD;
 
     public Group getGroup() {
@@ -75,26 +75,21 @@ public class Bullet {
 
     }
 
-    //自己写入坦克碰撞检测的方法
+
     public void collideWith(Tank tank) {
-        //判断子弹是否和坦克是一个阵营的，如果是一个阵营的则不执行碰撞检测，即不攻击本方队友坦克，只攻击敌人坦克
         if(this.group == tank.getGroup()) return;
-        //判断坦克这个方块和子弹这个方块是否相交，需要使用到辅助类rectangle
-        //取得子弹本身的矩形和坦克的矩形
         Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
-        //判断如果两个矩形相交，那么坦克和子弹都要消失
+
         if(rect1.intersects(rect2)){
             tank.die();
             this.die();
-            //使得是在坦克中心爆炸
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
             tf.explodes.add(new Explode(eX,eY,tf));
         }
     }
 
-    //添加die方法
     private void die() {
         this.living = false;
     }

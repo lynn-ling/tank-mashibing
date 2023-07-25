@@ -4,7 +4,6 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tf = new TankFrame();
 
-        //初始化敌方坦克，阵营为Group.BAD
         for (int i = 0; i < 5; i++) {
             tf.tanks.add(new Tank(50 + i*80,200,Dir.DOWN,Group.BAD,tf));
         }
