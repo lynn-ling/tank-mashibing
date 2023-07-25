@@ -4,9 +4,11 @@ import java.awt.*;
 
 public class Bullet {
     private static final int SPEED = 30;
-
     public static int WIDTH = ResourceMgr.bulletD.getWidth();
     public static int HEIGHT = ResourceMgr.bulletD.getHeight();
+
+    //进行初始化
+    Rectangle rect = new Rectangle();
 
     private int x,y;
     private Dir dir;
@@ -30,6 +32,11 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        //在new Bullet的时候下面这些rect就存在了，把它记录下来
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public void paint(Graphics g) {
@@ -69,6 +76,10 @@ public class Bullet {
                 break;
         }
 
+        //每move一下要更新rect值。这样这个矩形就跟着子弹在不断地移动
+        rect.x = this.x;
+        rect.y = this.y;
+
         if(x<0 || y<0 || x>TankFrame.GAME_WIDTH || y>TankFrame.GAME_HEIGHT){
             living = false;
         }
@@ -81,7 +92,7 @@ public class Bullet {
         Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
 
-        if(rect1.intersects(rect2)){
+        if(rect.intersects(tank.rect)){
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;

@@ -20,6 +20,9 @@ public class Tank {
 
     private Group group = Group.BAD;
 
+    //进行初始化
+    Rectangle rect = new Rectangle();
+
     public int getX() {
         return x;
     }
@@ -42,6 +45,11 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        //在new Tank的时候下面这些rect就存在了，把它记录下来
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public TankFrame getTf() {
@@ -123,6 +131,10 @@ public class Tank {
 
         //边界检测
         boundsCheck();
+
+        //将tank移动完的位置传给rect
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     private void boundsCheck() {
