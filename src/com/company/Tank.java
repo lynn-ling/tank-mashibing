@@ -6,7 +6,7 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 5;
+    private static final int SPEED = 10;
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -120,6 +120,20 @@ public class Tank {
 
         if(this.group == Group.BAD && random.nextInt(100) > 95)
             randomDir();
+
+        //边界检测
+        boundsCheck();
+    }
+
+    private void boundsCheck() {
+        if(this.x <0) x = 0;
+        //因为上面有个菜单条，要把它的位置让出来
+        if(this.y < 30) y = 30;
+        //不减去Tank.WIDTH和Tank.HEIGHT的情况下，坦克还是会开出屏幕下方和右方一个坦克的位置
+        //不减去Tank.WIDTH，但减去Tank.HEIGHT的情况下，坦克会开出屏幕右方一个坦克的位置
+        //不减去Tank.HEIGHT，但减去Tank.WIDTH的情况下，坦克会开出屏幕下方一个坦克的位置
+        if(this.x > TankFrame.GAME_WIDTH - Tank.WIDTH) x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+        if(this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
     }
 
     private void randomDir() {
