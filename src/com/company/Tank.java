@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank {
-    //把策略作为成员变量
-    FireStrategy fs = new DefaultFireStrategy();
+
+    FireStrategy fs ;
 
     int x, y;
     Dir dir = Dir.DOWN;
@@ -52,6 +52,10 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        //初始化的时候，如果是友军坦克，就朝四个方向fire，否则则按照DefaultFire策略fire
+        if(group == Group.GOOD) fs = new FourDirFireStrategy();
+        else fs = new DefaultFireStrategy();
     }
 
     public TankFrame getTf() {
