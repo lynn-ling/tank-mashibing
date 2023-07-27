@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ResourceMgr {
-    //坦克要区分我方还是敌方，用的坦克图片不一样
+
     public static BufferedImage goodTankL,goodTankU,goodTankR,goodTankD;
     public static BufferedImage badTankL,badTankU,badTankR,badTankD;
     public static BufferedImage bulletL,bulletU,bulletR,bulletD;

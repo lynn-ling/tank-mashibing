@@ -7,7 +7,6 @@ public class Bullet {
     public static int WIDTH = ResourceMgr.bulletD.getWidth();
     public static int HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    //进行初始化
     Rectangle rect = new Rectangle();
 
     private int x,y;
@@ -32,11 +31,14 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
-        //在new Bullet的时候下面这些rect就存在了，把它记录下来
+
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        //将bullet new出来之后，直接把它自己加到bullets队列中去
+        tf.bullets.add(this);
     }
 
     public void paint(Graphics g) {
@@ -76,7 +78,6 @@ public class Bullet {
                 break;
         }
 
-        //每move一下要更新rect值。这样这个矩形就跟着子弹在不断地移动
         rect.x = this.x;
         rect.y = this.y;
 
