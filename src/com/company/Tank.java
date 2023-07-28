@@ -1,6 +1,7 @@
 package com.company;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Tank {
@@ -53,9 +54,21 @@ public class Tank {
         rect.width = WIDTH;
         rect.height = HEIGHT;
 
-        //初始化的时候，如果是友军坦克，就朝四个方向fire，否则则按照DefaultFire策略fire
-        if(group == Group.GOOD) fs = new FourDirFireStrategy();
-        else fs = new DefaultFireStrategy();
+        if(group == Group.GOOD){
+            //通过调用 PropertyMgr.get("goodFS") 方法获取一个名为 "goodFS" 的属性值
+            String goodFSName = (String)PropertyMgr.get("goodFS");
+            //把goodFSName代表的类load到内存
+            try {
+                //通过 Class.forName(goodFSName) 方法获取到指定类名的类对象
+                //通过 Class.forName(goodFSName) 获取到的类对象，调用 getDeclaredConstructor() 方法获取类的默认构造函数
+                // 并调用 newInstance() 方法创建该类的实例对象，并将其赋值给变量 fs
+                fs = (FireStrategy) Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            fs = new DefaultFireStrategy();
+        }
     }
 
     public TankFrame getTf() {
