@@ -1,6 +1,5 @@
 package com.company;
 
-//增加向四个方向fire的策略
 public class FourDirFireStrategy implements FireStrategy{
 
 
@@ -11,7 +10,7 @@ public class FourDirFireStrategy implements FireStrategy{
 
         Dir[] dirs = Dir.values();
         for(Dir dir : dirs){
-            new Bullet(bX,bY,dir,t.group,t.tf);
+            t.tf.gf.createBullet(bX,bY,dir,t.group,t.tf);
         }
 
         if(t.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();

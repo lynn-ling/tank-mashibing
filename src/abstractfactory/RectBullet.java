@@ -1,14 +1,13 @@
-package com.company;
+package abstractfactory;
 
-import abstractfactory.BaseBullet;
-import abstractfactory.BaseTank;
+import com.company.*;
 
 import java.awt.*;
 
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     private static final int SPEED = 30;
-    public static int WIDTH = ResourceMgr.bulletD.getWidth();
-    public static int HEIGHT = ResourceMgr.bulletD.getHeight();
+    public static int WIDTH = 20;
+    public static int HEIGHT = 20;
 
     Rectangle rect = new Rectangle();
 
@@ -28,7 +27,7 @@ public class Bullet extends BaseBullet {
         this.group = group;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf){
+    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf){
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -47,20 +46,11 @@ public class Bullet extends BaseBullet {
         if(!living){
             tf.bullets.remove(this);
         }
-        switch (dir){
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL,x,y,null);
-                break;
-            case UP:
-                g.drawImage(ResourceMgr.bulletU,x,y,null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x,y,null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x,y,null);
-                break;
-        }
+        Color c = g.getColor();
+        g.setColor(Color.BLUE);
+        g.fillRect(x,y,20,20);
+        g.setColor(c);
+
         move();
     }
 

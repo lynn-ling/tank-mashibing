@@ -1,5 +1,7 @@
 package com.company;
 
+import abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,14 +12,23 @@ import java.util.List;
 
 
 public class TankFrame extends Frame {
+    /*
+    给工厂进行初始化(想用DefaultFactory里new出来的就new DefaultFactory)
+    public GameFactory gf = new DefaultFactory();
+    想用RectFactory里new出来的就new RectFactory
+    */
+    public GameFactory gf = new RectFactory();
 
-    Tank myTank = new Tank(200,400, Dir.DOWN,Group.GOOD,this);
-    List<Bullet> bullets = new ArrayList<>();
+//    Tank myTank = new Tank(200,400, Dir.DOWN,Group.GOOD,this);
 
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    BaseTank myTank = gf.createTank(200,400, Dir.DOWN,Group.GOOD,this);
 
-    static final int GAME_WIDTH = 1080,GAME_HEIGHT = 960;
+    //list里原来放的是具体的，现在要放抽象的
+    public List<BaseBullet> bullets = new ArrayList<>();
+    public List<BaseTank> tanks = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
+
+    public static final int GAME_WIDTH = 1080,GAME_HEIGHT = 960;
 
     public TankFrame(){
         System.out.println(this);
@@ -34,9 +45,7 @@ public class TankFrame extends Frame {
             }
         });
         this.addKeyListener(new MyKeyListener());
-
     }
-
 
     Image offScreenImage = null;
     @Override
@@ -63,6 +72,7 @@ public class TankFrame extends Frame {
         g.setColor(c);
 
         myTank.paint(g);
+
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
