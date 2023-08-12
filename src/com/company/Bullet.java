@@ -13,9 +13,13 @@ public class Bullet extends GameObject{
     private Dir dir;
 
     private boolean living = true;
-    GameModel gm = null;
+    public GameModel gm = null;
 
-    private Group group = Group.BAD;
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public Group group = Group.BAD;
 
     public Group getGroup() {
         return group;
@@ -87,8 +91,8 @@ public class Bullet extends GameObject{
     }
 
 
-    public void collideWith(Tank tank) {
-        if(this.group == tank.getGroup()) return;
+    public boolean collideWith(Tank tank) {
+        if(this.group == tank.getGroup()) return false;
 
         if(rect.intersects(tank.rect)){
             tank.die();
@@ -96,10 +100,12 @@ public class Bullet extends GameObject{
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
             gm.add(new Explode(eX,eY,gm));
+            return true;
         }
+        return false;
     }
 
-    private void die() {
+    public void die() {
         this.living = false;
     }
 }
