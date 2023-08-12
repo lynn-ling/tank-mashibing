@@ -1,8 +1,9 @@
-package com.company;
+package strategy;
 
-//增加向四个方向fire的策略
+import com.company.*;
+
+
 public class FourDirFireStrategy implements FireStrategy{
-
 
     @Override
     public void fire(Tank t) {

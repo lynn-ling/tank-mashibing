@@ -2,7 +2,7 @@ package com.company;
 
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends GameObject{
     private static final int SPEED = 30;
     public static int WIDTH = ResourceMgr.bulletD.getWidth();
     public static int HEIGHT = ResourceMgr.bulletD.getHeight();
@@ -37,13 +37,12 @@ public class Bullet {
         rect.width = WIDTH;
         rect.height = HEIGHT;
 
-        //将bullet new出来之后，直接把它自己加到bullets队列中去
-        gm.bullets.add(this);
+        gm.add(this);
     }
 
     public void paint(Graphics g) {
         if(!living){
-            gm.bullets.remove(this);
+            gm.remove(this);
         }
         switch (dir){
             case LEFT:
@@ -90,15 +89,13 @@ public class Bullet {
 
     public void collideWith(Tank tank) {
         if(this.group == tank.getGroup()) return;
-        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
 
         if(rect.intersects(tank.rect)){
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
-            gm.explodes.add(new Explode(eX,eY,gm));
+            gm.add(new Explode(eX,eY,gm));
         }
     }
 

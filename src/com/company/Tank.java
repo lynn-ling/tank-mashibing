@@ -1,15 +1,18 @@
 package com.company;
 
+import strategy.DefaultFireStrategy;
+import strategy.FireStrategy;
+
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public class Tank {
+public class Tank extends GameObject{
 
     FireStrategy fs ;
 
-    int x, y;
-    Dir dir = Dir.DOWN;
+    public int x, y;
+    public int oldX, oldY;
+    public Dir dir = Dir.DOWN;
     private static final int SPEED = 10;
 
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
@@ -21,11 +24,11 @@ public class Tank {
 
     private boolean living = true;
 
-    Group group = Group.BAD;
+    public Group group = Group.BAD;
 
     Rectangle rect = new Rectangle();
 
-    GameModel gm;
+    public GameModel gm;
 
     public int getX() {
         return x;
@@ -43,7 +46,11 @@ public class Tank {
         this.y = y;
     }
 
-    public Tank(int x, int y, Dir dir, Group group,GameModel gm) {
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -56,13 +63,8 @@ public class Tank {
         rect.height = HEIGHT;
 
         if(group == Group.GOOD){
-            //通过调用 PropertyMgr.get("goodFS") 方法获取一个名为 "goodFS" 的属性值
             String goodFSName = (String)PropertyMgr.get("goodFS");
-            //把goodFSName代表的类load到内存
             try {
-                //通过 Class.forName(goodFSName) 方法获取到指定类名的类对象
-                //通过 Class.forName(goodFSName) 获取到的类对象，调用 getDeclaredConstructor() 方法获取类的默认构造函数
-                // 并调用 newInstance() 方法创建该类的实例对象，并将其赋值给变量 fs
                 fs = (FireStrategy) Class.forName(goodFSName).getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,7 +74,13 @@ public class Tank {
         }
     }
 
+    public Group getGroup() {
+        return group;
+    }
 
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     public Dir getDir() {
         return dir;
@@ -90,8 +98,9 @@ public class Tank {
         this.moving = moving;
     }
 
+
     public void paint(Graphics g) {
-        if(!living) gm.tanks.remove(this);
+        if(!living) gm.remove(this);
 
         switch (dir){
             case LEFT:
@@ -110,15 +119,15 @@ public class Tank {
         move();
     }
 
-    public Group getGroup() {
-        return group;
-    }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void stop(){
+        moving = false;
     }
 
     private void move(){
+        oldX = x;
+        oldY = y;
+
         if(!moving){
             return;
         }

@@ -1,6 +1,11 @@
-package com.company;
+package strategy;
 
-//定义DefaultFireStrategy类，实现FireStrategy接口的fire方法
+
+import com.company.Audio;
+import com.company.Bullet;
+import com.company.Group;
+import com.company.Tank;
+
 public class DefaultFireStrategy implements FireStrategy{
 
     @Override
