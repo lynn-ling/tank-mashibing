@@ -13,7 +13,7 @@ public class Bullet {
     private Dir dir;
 
     private boolean living = true;
-    TankFrame tf = null;
+    GameModel gm = null;
 
     private Group group = Group.BAD;
 
@@ -25,12 +25,12 @@ public class Bullet {
         this.group = group;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf){
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gm){
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
+        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
@@ -38,12 +38,12 @@ public class Bullet {
         rect.height = HEIGHT;
 
         //将bullet new出来之后，直接把它自己加到bullets队列中去
-        tf.bullets.add(this);
+        gm.bullets.add(this);
     }
 
     public void paint(Graphics g) {
         if(!living){
-            tf.bullets.remove(this);
+            gm.bullets.remove(this);
         }
         switch (dir){
             case LEFT:
@@ -98,7 +98,7 @@ public class Bullet {
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
-            tf.explodes.add(new Explode(eX,eY,tf));
+            gm.explodes.add(new Explode(eX,eY,gm));
         }
     }
 
