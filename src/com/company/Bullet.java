@@ -9,11 +9,9 @@ public class Bullet extends GameObject{
 
     public Rectangle rect = new Rectangle();
 
-    private int x,y;
     private Dir dir;
 
     private boolean living = true;
-    public GameModel gm = null;
 
     public Rectangle getRect() {
         return rect;
@@ -44,6 +42,16 @@ public class Bullet extends GameObject{
         GameModel.getInstance().add(this);
     }
 
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
     public void paint(Graphics g) {
         if(!living){
             GameModel.getInstance().remove(this);
@@ -64,6 +72,8 @@ public class Bullet extends GameObject{
         }
         move();
     }
+
+
 
     private void move(){
         switch (dir) {

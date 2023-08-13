@@ -10,7 +10,6 @@ public class Tank extends GameObject{
 
     FireStrategy fs ;
 
-    public int x, y;
     public int oldX, oldY;
     public Dir dir = Dir.DOWN;
     private static final int SPEED = 10;
@@ -47,6 +46,16 @@ public class Tank extends GameObject{
 
     public Rectangle getRect() {
         return rect;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     public Tank(int x, int y, Dir dir, Group group) {

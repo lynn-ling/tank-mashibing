@@ -18,6 +18,16 @@ public class Wall extends GameObject{
     }
 
     @Override
+    public int getWidth() {
+        return w;
+    }
+
+    @Override
+    public int getHeight() {
+        return h;
+    }
+
+    @Override
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.DARK_GRAY);
