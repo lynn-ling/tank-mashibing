@@ -26,7 +26,7 @@ public class Tank extends GameObject{
 
     public Group group = Group.BAD;
 
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     public GameModel gm;
 
@@ -122,6 +122,11 @@ public class Tank extends GameObject{
 
     public void stop(){
         moving = false;
+    }
+
+    public void back(){
+        x = oldX;
+        y = oldY;
     }
 
     private void move(){

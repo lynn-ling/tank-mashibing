@@ -3,3 +3,5 @@ initTankCount=10
 #fireStrategy
 goodFS=strategy.FourDirFireStrategy
 badFS=strategy.DefaultFireStrategy
+#colliders
+colliders=cor.BulletTankCollider,cor.TankTankCollider
