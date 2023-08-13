@@ -29,24 +29,24 @@ public class Bullet extends GameObject{
         this.group = group;
     }
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm){
+    //GameModel设置成单例以后，构造方法里也就不需要传这个参数了
+    public Bullet(int x, int y, Dir dir, Group group){
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
 
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
 
-        gm.add(this);
+        GameModel.getInstance().add(this);
     }
 
     public void paint(Graphics g) {
         if(!living){
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
         switch (dir){
             case LEFT:
